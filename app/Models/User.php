@@ -34,4 +34,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Problem');
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany('App\Models\Course', 'course_user');
+    }
 }
