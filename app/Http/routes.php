@@ -19,3 +19,4 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/my-courses', 'CourseController@showCourses')->middleware('auth');
+Route::get('/all-courses', 'CourseController@showAllCourses')->middleware('auth');

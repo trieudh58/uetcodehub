@@ -13,7 +13,13 @@ class CourseController extends Controller
 {
     public function showCourses()
     {
-        $courses = Auth::user()->courses;
+        $courses = Auth::user()->courses->sortBy('course_name');
         return view('course.showCourses', compact('courses'));
+    }
+
+    public function showAllCourses()
+    {
+        $courses = Course::orderBy('course_name')->get();
+        return view('course.showAllCourses', compact('courses'));
     }
 }
