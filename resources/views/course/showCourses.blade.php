@@ -18,7 +18,7 @@
                         @foreach($courses as $index=>$c)
                             <tr>
                                 <td>{{$index + 1}}</td>
-                                <td>{{$c->course_name}}</td>
+                                <td><a href="{{url('/my-courses/'.$c->course_id.'/exercises')}}">{{$c->course_name}}</a></td>
                                 <td>{{$c->createdUser()}}</td>
                                 <td width="300px">{{$c->description}}</td>
                                 <td>

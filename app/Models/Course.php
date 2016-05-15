@@ -18,4 +18,9 @@ class Course extends Model
         $created_user = User::find($this->created_user_id);
         return $created_user->first_name.' '.$created_user->last_name;
     }
+
+    public function problems()
+    {
+        return $this->belongsToMany('App\Models\Problem', 'course_problem')->withPivot('score_in_course', 'hard_level', 'is_active');
+    }
 }
