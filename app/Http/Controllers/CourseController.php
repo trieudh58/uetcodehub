@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class CourseController extends Controller
 {
     public function showCourses()
     {
-        $courses = Auth::user()->courses->sortBy('course_name');
+        $courses = Auth::user()->courses->sortBy('course_name')->values();
         return view('course.showCourses', compact('courses'));
     }
 
@@ -31,5 +33,19 @@ class CourseController extends Controller
             }
         }
         return view('course.showAllCourses', compact('courses'));
+    }
+
+    public function joinCourse($course_id)
+    {
+        $user = Auth::user();
+        $user->courses()->attach($course_id);
+        return Redirect::back();
+    }
+
+    public function leaveCourse($course_id)
+    {
+        $user = Auth::user();
+        $user->courses()->detach($course_id);
+        return Redirect::back();
     }
 }
