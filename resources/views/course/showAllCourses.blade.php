@@ -20,7 +20,11 @@
                             <td>{{$c->course_name}}</td>
                             <td>{{$c->createdUser()}}</td>
                             <td width="300px">{{$c->description}}</td>
-                            <td><a href="#">Tham gia lớp</a></td>
+                            @if(!$c->joined)
+                                <td><a href="#">Tham gia lớp</a></td>
+                            @else
+                                <td><a href="#">Rút khỏi lớp</a></td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>

@@ -20,6 +20,16 @@ class CourseController extends Controller
     public function showAllCourses()
     {
         $courses = Course::orderBy('course_name')->get();
+        $joined_courses = Auth::user()->courses;
+        foreach ($courses as $c) {
+            $c->joined = false;
+            foreach ($joined_courses as $jc) {
+                if ($jc->course_id == $c->course_id) {
+                    $c->joined = true;
+                    break;
+                }
+            }
+        }
         return view('course.showAllCourses', compact('courses'));
     }
 }
