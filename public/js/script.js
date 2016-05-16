@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('.table-display').DataTable( {
+  $('.table-display').DataTable({
     "pagingType": "full_numbers"
   });
 });

@@ -2,49 +2,43 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-2">
-                @if(sizeof($courses) > 0)
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Tên môn học</th>
-                            <th>Giảng viên</th>
-                            <th>Mô tả</th>
-                            <th>Hành động</th>
-                        </tr>
-                        <tbody>
-                        @foreach($courses as $index=>$c)
-                            <tr>
-                                <td>{{$index + 1}}</td>
-                                <td><a href="{{url('/my-courses/'.$c->course_id.'/problems')}}">{{$c->course_name}}</a></td>
-                                <td>{{$c->createdUser()}}</td>
-                                <td width="300px">{{$c->description}}</td>
-                                <td>
-                                    {!! Form::open([
-                                        'action' => array('CourseController@leaveCourse', $c->course_id),
-                                        'class' => 'form-horizontal',
-                                        'method' => 'post',
-                                    ]) !!}
-                                    <div class="form-group">
-                                        <div>
-                                            <button type="submit" class="btn btn-danger">
-                                                Rút khỏi lớp
-                                            </button>
-                                        </div>
-                                    </div>
-                                    {!! Form::close() !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                        </thead>
-                    </table>
-                @else
-                    Bạn chưa tham gia lớp học nào!
-                @endif
-            </div>
-        </div>
+        @if(sizeof($courses) > 0)
+            <table class="table-display">
+                <thead>
+                <tr>
+                    <th>Tên khóa học</th>
+                    <th>Giảng viên</th>
+                    <th>Mô tả</th>
+                    <th>Hoàn thành</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($courses as $course)
+                    <tr>
+                        <td><a href="{{url('/my-courses/'.$course->course_id.'/problems')}}"> {{$course->course_name}} </a></td>
+                        <td> {{$course->createdUser()}} </td>
+                        <td> {{$course->description}} </td>
+                        <td>
+                            {!! Form::open([
+                                'action' => array('CourseController@leaveCourse', $course->course_id),
+                                'class' => 'form-horizontal',
+                                'method' => 'post',
+                            ]) !!}
+                            <div class="form-group">
+                                <div>
+                                    <button type="submit" class="btn btn-danger">
+                                        Rút khỏi lớp
+                                    </button>
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        @else
+            Bạn chưa tham gia lớp học nào!
+        @endif
     </div>
 @endsection
