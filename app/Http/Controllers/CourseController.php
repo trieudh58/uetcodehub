@@ -49,10 +49,15 @@ class CourseController extends Controller
         return Redirect::back();
     }
 
-    public function showExercises($course_id)
+    public function showProblems($course_id)
     {
         $courses = Auth::user()->courses->find($course_id);
-        $exercises = $courses->problems;
-        return view('course.showExercises', compact('exercises'));
+        $problems = $courses->problems;
+        return view('course.showProblems', compact('problems'));
+    }
+
+    public function showExerciseDetail($problem_id)
+    {
+
     }
 }

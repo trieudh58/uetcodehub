@@ -20,7 +20,7 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/my-courses', 'CourseController@showCourses')->middleware('auth');
 Route::get('/all-courses', 'CourseController@showAllCourses')->middleware('auth');
-Route::get('/my-courses/{course_id}/exercises', 'CourseController@showExercises')->middleware('auth');
+Route::get('/my-courses/{course_id}/problems', 'CourseController@showProblems')->middleware('auth');
 
 Route::post('/join/{course_id}', 'CourseController@joinCourse')->middleware('auth');
 Route::post('/leave/{course_id}', 'CourseController@leaveCourse')->middleware('auth');
