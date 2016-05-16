@@ -8,22 +8,17 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
     <link href="{{ URL::asset('css/stylesheet.css') }}" rel="stylesheet">
 
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{!! HTML::script('js/script.js') !!}"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/script.js') }}"></script>
 
 </head>
 
 <body>
 @include('partials.navbar')
 @yield('body.content')
-@include('partials.footer')
+<hr>
 </body>
 </html>
-
-
-<script>
-</script>
-
+@yield('scripts')

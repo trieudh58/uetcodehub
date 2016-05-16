@@ -52,5 +52,29 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        DB::table('problems')->truncate();
+        foreach (range(1, 10) as $index) {
+            DB::table('problems')->insert([
+                'content' => $faker->text,
+                'time_limit' => 2.0,
+            ]);
+        }
+        DB::table('course_problem')->truncate();
+        foreach (range(1, 5) as $index) {
+            DB::table('course_problem')->insert([
+                'course_id' => 1,
+                'problem_id' => $index,
+                'hard_level' => 1,
+                'score_in_course' => 20
+            ]);
+        }
+        foreach (range(6, 10) as $index) {
+            DB::table('course_problem')->insert([
+                'course_id' => 2,
+                'problem_id' => $index,
+                'hard_level' => 2,
+                'score_in_course' => 20
+            ]);
+        }
     }
 }
