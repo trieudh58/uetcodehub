@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Problem;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -56,8 +57,10 @@ class CourseController extends Controller
         return view('course.showProblems', compact('problems'));
     }
 
-    public function showExerciseDetail($problem_id)
+    public function showProblemDetail($problem_id)
     {
-
+        $problem = Problem::find($problem_id);
+        $submissions = $problem->submissions;
+        return view('course.showProblemDetail', compact('problem', 'submissions'));
     }
 }
