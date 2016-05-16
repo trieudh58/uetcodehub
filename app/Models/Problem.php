@@ -16,4 +16,9 @@ class Problem extends Model
     {
         return $this->belongsToMany('App\Models\Course', 'course_problem');
     }
+
+    public function submissions()
+    {
+        return $this->hasMany('App\Models\Submission');
+    }
 }

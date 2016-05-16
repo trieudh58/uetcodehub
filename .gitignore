@@ -6,3 +6,4 @@ Homestead.yaml
 Homestead.json
 .env
 .idea/
+!vendor/laravel/framework/src/Illuminate/Auth/*

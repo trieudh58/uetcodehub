@@ -76,5 +76,27 @@ class DatabaseSeeder extends Seeder
                 'score_in_course' => 20
             ]);
         }
+
+        DB::table('submissions')->truncate();
+        foreach (range(1, 5) as $index) {
+            DB::table('submissions')->insert([
+                'problem_id' => $index,
+                'course_id' => 1,
+                'user_id' => 2,
+                'submit_time' => \Carbon\Carbon::now(),
+                'language' => 'C++',
+                'source_code' => $faker->text,
+            ]);
+        }
+        foreach (range(6, 10) as $index) {
+            DB::table('submissions')->insert([
+                'problem_id' => $index,
+                'course_id' => 2,
+                'user_id' => 2,
+                'submit_time' => \Carbon\Carbon::now(),
+                'language' => 'C++',
+                'source_code' => $faker->text,
+            ]);
+        }
     }
 }

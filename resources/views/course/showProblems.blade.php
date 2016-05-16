@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-2">
-                @if(sizeof($exercises) > 0)
+                @if(sizeof($problems) > 0)
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -16,15 +16,15 @@
                             <td>Trạng thái</td>
                         </tr>
                         <tbody>
-                        @foreach($exercises as $index=>$ex)
+                        @foreach($problems as $index=>$p)
                             <tr>
-                                <td>Problem {{$index + 1}}</td>
-                                <td width="300px">{{$ex->content}}</td>
-                                <td>{{$ex->time_limit}}</td>
-                                <td>{{$ex->pivot->hard_level}}</td>
-                                <td>{{$ex->pivot->score_in_course}}</td>
+                                <td><a href="{{url(Request::path().'/'.$p->problem_id)}}">Problem {{$index + 1}}</a></td>
+                                <td width="300px">{{$p->content}}</td>
+                                <td>{{$p->time_limit}}</td>
+                                <td>{{$p->pivot->hard_level}}</td>
+                                <td>{{$p->pivot->score_in_course}}</td>
                                 <td>
-                                    @if($ex->pivot->is_active)
+                                    @if($p->pivot->is_active)
                                         Chưa nộp
                                     @else
                                         Đã nộp
