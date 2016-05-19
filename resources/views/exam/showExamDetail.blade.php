@@ -14,7 +14,7 @@
             <tbody>
             @foreach ($problems as $index=>$problem)
                 <tr>
-                    <td><a>Bài {{$index + 1}}</a></td>
+                    <td><a href="{{url('/exams/'.$exam_id.'/problems/'.$problem->problem_id)}}">Bài {{$index + 1}}</a></td>
                     <td>{{substr($problem->content, 0, 100)}}... </td>
                     <td>{{$problem->pivot->score_in_exam}} </td>
                     <td>{{$problem->time_limit}} s</td>
