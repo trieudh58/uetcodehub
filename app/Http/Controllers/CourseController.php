@@ -57,10 +57,12 @@ class CourseController extends Controller
         return view('course.showProblems', compact('problems'));
     }
 
-    public function showProblemDetail($problem_id)
+    public function showProblemDetail($course_id, $problem_id)
     {
-        $problem = Problem::find($problem_id);
+        $courses = Auth::user()->courses->find($course_id);
+        $problems = $courses->problems;
+        $problem = $problems->find($problem_id);
         $submissions = $problem->submissions;
-        return view('course.showProblemDetail', compact('problem', 'submissions'));
+        return view('course.showProblemDetail', compact('course_id', 'problem', 'submissions'));
     }
 }

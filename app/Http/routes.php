@@ -27,3 +27,4 @@ Route::get('/my-courses/{course_id}/problems/{problem_id}', 'CourseController@sh
 
 Route::post('/join/{course_id}', 'CourseController@joinCourse')->middleware('auth');
 Route::post('/leave/{course_id}', 'CourseController@leaveCourse')->middleware('auth');
+Route::post('/submit/{course_id}/{problem_id}', 'JudgeController@submit')->middleware('auth');

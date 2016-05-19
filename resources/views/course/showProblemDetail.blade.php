@@ -9,6 +9,7 @@
     <script src="{{ URL::asset('js/ace-builds/src-min-noconflict/ace.js') }}" type="text/javascript" charset="utf-8"></script>
     <script>
         var editor = ace.edit("editor");
+        var textarea = $('#source_code');
         editor.setTheme("ace/theme/twilight");
         editor.getSession().setMode("ace/mode/c_cpp");
         function changeLanguage() {
@@ -24,6 +25,11 @@
                     editor.getSession().setMode("ace/mode/c_cpp");
             }
         }
+        editor.getSession().on('change', function () {
+            textarea.val(editor.getSession().getValue());
+        });
+        textarea.val(editor.getSession().getValue());
+
     </script>
 @stop
 @section('content')
@@ -50,12 +56,16 @@
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="editor-box">
+                        {!! Form::open([
+                                'action' => array('JudgeController@submit', $course_id, $problem->problem_id),
+                                'method' => 'post',
+                            ]) !!}
                         <div class="panel">
                             <div class="box">
                                 <div class="box-header">
                                     <div class="col-md-10">
                                         <div class="form-group" style="width:150px">
-                                            <select class="form-control" id="language" onchange="changeLanguage()">
+                                            <select class="form-control" name="language" id="language" onchange="changeLanguage()">
                                                 <option>C++</option>
                                                 <option>Java</option>
                                             </select>
@@ -68,11 +78,25 @@
                                     </div>
                                 </div>
                                 <div class="box-content">
-                                    <div id="editor"></div>
+                                    <div class="form-group" hidden>
+                                        <textarea class="form-control" name="source_code" id="source_code"></textarea>
+                                    </div>
+                                    @if(sizeof($submissions))
+                                        <div id="editor">{{$submissions[sizeof($submissions)-1]->source_code}}</div>
+                                    @else
+                                        <div id="editor"></div>
+                                    @endif
                                 </div>
                             </div>
-                            <button class="btn btn-primary pull-right" id="submit-button">Submit</button>
+                            <div class="form-group">
+                                <div>
+                                    <button class="btn btn-primary pull-right" type="submit" id="submit-button">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                        {!! Form::close() !!}
                     </div>
                     <div role="tabpanel" class="tab-pane" id="result">
                         @if (sizeof($submissions))

@@ -78,7 +78,43 @@ class DatabaseSeeder extends Seeder
         }
 
         DB::table('submissions')->truncate();
-        foreach (range(1, 5) as $index) {
+        DB::table('submissions')->insert([
+            'problem_id' => 1,
+            'course_id' => 1,
+            'user_id' => 2,
+            'submit_time' => \Carbon\Carbon::now(),
+            'language' => 'C++',
+            'source_code' => '#include<iostream>
+
+using namespace std;
+
+int main(){
+	int i;
+	//while(1)
+	cin >> i;
+	cout << i;
+	return 0;
+}',
+        ]);
+        DB::table('submissions')->insert([
+            'problem_id' => 2,
+            'course_id' => 1,
+            'user_id' => 2,
+            'submit_time' => \Carbon\Carbon::now(),
+            'language' => 'C++',
+            'source_code' => '#include<iostream>
+
+using namespace std;
+
+int main(){
+	int i;
+	//while(1)
+	cin >> i;
+	cout << i;
+	return 0;
+}',
+        ]);
+        foreach (range(3, 5) as $index) {
             DB::table('submissions')->insert([
                 'problem_id' => $index,
                 'course_id' => 1,
