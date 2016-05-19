@@ -14,4 +14,11 @@ class ExamController extends Controller
         $exams = Exam::all();
         return view('exam.showExamCourses', compact('exams'));
     }
+    
+    public function showExamDetail($exam_id)
+    {
+        $exam = Exam::find($exam_id);
+        $problems = $exam->problems;
+        return view('exam.showExamDetail', compact('problems'));
+    }
 }

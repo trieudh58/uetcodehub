@@ -145,5 +145,14 @@ int main(){
                 'duration' => 90,
             ]);
         }
+
+        DB::table('exam_problem')->truncate();
+        foreach (range(1, 5) as $index) {
+            DB::table('exam_problem')->insert([
+                'exam_id' => 1,
+                'problem_id' => $index,
+                'score_in_exam' => 20
+            ]);
+        }
     }
 }
