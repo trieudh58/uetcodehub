@@ -13,12 +13,13 @@ use Mockery\CountValidator\Exception;
 
 class JudgeController extends Controller
 {
-    public function submit(Request $request, $course_id, $problem_id)
+    public function submit(Request $request, $course_id = null, $exam_id = null, $problem_id)
     {
         // Save submission to DB
         $submission = new Submission();
         $submission->problem_id = $problem_id;
         $submission->course_id = $course_id;
+        $submission->exam_id = $exam_id;
         $submission->user_id = Auth::user()->user_id;
         $submission->language = $request->input('language');
         $submission->source_code = $request->input('source_code');
