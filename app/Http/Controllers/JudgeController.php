@@ -8,6 +8,7 @@ use Artisaninweb\SoapWrapper\Facades\SoapWrapper;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Mockery\CountValidator\Exception;
 
 class JudgeController extends Controller
@@ -55,6 +56,7 @@ class JudgeController extends Controller
         catch (Exception $e) {
             echo 'Message: '.$e->getMessage();
         }
+        session()->flash('is_submitted', true);
         return Redirect::back();
     }
 }

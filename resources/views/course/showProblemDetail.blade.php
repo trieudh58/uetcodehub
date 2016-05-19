@@ -55,7 +55,7 @@
                     <li role="presentation" class=""><a href="#result" aria-controls="submit" role="tab" data-toggle="tab" aria-expanded="false">Kết quả</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="editor-box">
+                    <div role="tabpanel" class="tab-pane {{Session::get('is_submitted') == true ? '' : 'active'}}" id="editor-box">
                         {!! Form::open([
                                 'action' => array('JudgeController@submit', $course_id, $problem->problem_id),
                                 'method' => 'post',
@@ -98,13 +98,13 @@
                         </div>
                         {!! Form::close() !!}
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="result">
+                    <div role="tabpanel" class="tab-pane {{Session::get('is_submitted') == true ? 'active' : ''}}" id="result">
                         @if (sizeof($submissions))
                             <div class="score">
                                 Điểm:
-                                <span> {{  $submissions[sizeof($submissions) - 1]->result_score != null ? $submissions[sizeof($submissions) - 1]->result_score : 'Chưa có'}} </span>
+                                <span> {{  $submissions[sizeof($submissions) - 1]->result_score !== null ? $submissions[sizeof($submissions) - 1]->result_score : 'Chưa có'}} </span>
                             </div>
-                            @if ($submissions[sizeof($submissions) - 1]->result_score != null)
+                            @if ($submissions[sizeof($submissions) - 1]->result_score !== null)
                             <table class="table-display">
                                 <thead>
                                 <tr>
