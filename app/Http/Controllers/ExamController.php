@@ -19,7 +19,7 @@ class ExamController extends Controller
     {
         $exam = Exam::find($exam_id);
         $problems = $exam->problems;
-        return view('exam.showExamDetail', compact('problems'));
+        return view('exam.showExamDetail', compact('exam_id', 'problems'));
     }
 
     public function showProblemDetail($exam_id, $problem_id)
