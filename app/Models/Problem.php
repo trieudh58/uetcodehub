@@ -21,4 +21,9 @@ class Problem extends Model
     {
         return $this->hasMany('App\Models\Submission');
     }
+
+    public function exams()
+    {
+        return $this->belongsToMany('App\Models\Exam', 'exam_problem')->withPivot('score_in_exam', 'is_active');
+    }
 }
