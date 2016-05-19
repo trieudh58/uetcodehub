@@ -52,7 +52,7 @@
                     @else
                         <li><a href="{{url('/my-courses')}}">Khóa học của tôi</a></li>
                         <li><a href="{{url('/all-courses')}}">Tất cả khóa học</a></li>
-                        <li><a href="{{url('/exam')}}">Kỳ thi</a></li>
+                        <li><a href="{{url('/exams')}}">Kỳ thi</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->getFullName() }} <span class="caret"></span>

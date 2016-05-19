@@ -23,4 +23,9 @@ class Course extends Model
     {
         return $this->belongsToMany('App\Models\Problem', 'course_problem')->withPivot('score_in_course', 'hard_level', 'is_active');
     }
+    
+    public function exams()
+    {
+        return $this->hasMany('App\Models\Exam');
+    }
 }
