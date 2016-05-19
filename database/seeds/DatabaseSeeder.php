@@ -134,5 +134,16 @@ int main(){
                 'source_code' => $faker->text,
             ]);
         }
+
+        DB::table('exams')->truncate();
+        foreach (range(1, 10) as $index) {
+            DB::table('exams')->insert([
+                'exam_name' => $faker->name,
+                'course_id' => $index,
+                'available_from' => $faker->dateTime,
+                'available_to' => $faker->dateTime,
+                'duration' => 90,
+            ]);
+        }
     }
 }

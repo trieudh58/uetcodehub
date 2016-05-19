@@ -24,7 +24,7 @@ Route::get('/my-courses', 'CourseController@showCourses')->middleware('auth');
 Route::get('/all-courses', 'CourseController@showAllCourses')->middleware('auth');
 Route::get('/my-courses/{course_id}/problems', 'CourseController@showProblems')->middleware('auth');
 Route::get('/my-courses/{course_id}/problems/{problem_id}', 'CourseController@showProblemDetail')->middleware('auth');
-Route::get('/exam', 'ExamController@showExamCourses')->middleware('auth');
+Route::get('/exams', 'ExamController@showExamCourses')->middleware('auth');
 
 
 Route::post('/join/{course_id}', 'CourseController@joinCourse')->middleware('auth');
