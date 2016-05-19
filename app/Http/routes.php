@@ -32,3 +32,4 @@ Route::get('/exams/{exam_id}/problems/{problem_id}', 'ExamController@showProblem
 Route::post('/join/{course_id}', 'CourseController@joinCourse')->middleware('auth');
 Route::post('/leave/{course_id}', 'CourseController@leaveCourse')->middleware('auth');
 Route::post('/submit/{course_id}/{problem_id}', 'JudgeController@submit')->middleware('auth');
+Route::post('/submit-exam/{exam_id}/{problem_id}', 'JudgeController@submitExam')->middleware('auth');
