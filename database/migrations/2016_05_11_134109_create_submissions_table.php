@@ -23,7 +23,7 @@ class CreateSubmissionsTable extends Migration
             $table->string('language')->length(20)->nullable();
             $table->text('source_code')->nullable();
             $table->float('running_time')->nullable();
-            $table->string('result')->length(100)->nullable();
+            $table->string('result')->nullable();
             $table->integer('result_score')->length(11)->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamps();
