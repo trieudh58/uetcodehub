@@ -24,8 +24,8 @@
                     <td>{{$exam->duration}} phút</td>
                     <td>
                         @if (!$exam->completed)
-                            <a data-toggle="modal" data-target="#enroll-modal">Bắt đầu thi</a>
-                            <div class="modal fade" id="enroll-modal" role="dialog">
+                            <a data-toggle="modal" data-target="#enroll-modal-{{$exam->exam_id}}">Bắt đầu thi</a>
+                            <div class="modal fade" id="enroll-modal-{{$exam->exam_id}}" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">

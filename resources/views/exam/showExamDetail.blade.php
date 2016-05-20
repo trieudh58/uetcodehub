@@ -5,19 +5,21 @@
         <table class="table-display">
             <thead>
             <tr>
-                <th></th>
+                <th>Tên bài</th>
                 <th>Đề bài</th>
                 <th>Điểm tối đa</th>
                 <th>Thời gian chạy tối đa</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             @foreach ($problems as $index=>$problem)
                 <tr>
-                    <td><a href="{{url('/exams/'.$exam_id.'/problems/'.$problem->problem_id)}}">Bài {{$index + 1}}</a></td>
+                    <td>Bài {{$index + 1}}</td>
                     <td>{{substr($problem->content, 0, 100)}}... </td>
                     <td>{{$problem->pivot->score_in_exam}} </td>
                     <td>{{$problem->time_limit}} s</td>
+                    <td><a href="{{url('/exams/'.$exam_id.'/problems/'.$problem->problem_id)}}">Làm bài</a></td>
                 </tr>
             @endforeach
             </tbody>
