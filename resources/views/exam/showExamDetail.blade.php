@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="page-label">Truyền tên kì thi</div>
-        <div class="col-md-3">
+        <div class="m-heading-1 border-green page-label">
+            Kì thi: {{$exam_name}}
         </div>
         <div class="col-md-9">
             <table class="table-display">
@@ -12,7 +12,7 @@
                     <th>Tên bài</th>
                     <th>Đề bài</th>
                     <th>Điểm tối đa</th>
-                    <th>Giới hạn thời gian chạy</th>
+                    <th>Time limit</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -23,7 +23,7 @@
                         <td>{{substr($problem->content, 0, 100)}}... </td>
                         <td>{{$problem->pivot->score_in_exam}} </td>
                         <td>{{$problem->time_limit}} s</td>
-                        <td><a href="{{url('/exams/'.$exam_id.'/problems/'.$problem->problem_id)}}">Làm bài</a></td>
+                        <td><a class="btn red" href="{{url('/exams/'.$exam_id.'/problems/'.$problem->problem_id)}}">Làm bài</a></td>
                     </tr>
                 @endforeach
                 </tbody>

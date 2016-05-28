@@ -1,5 +1,4 @@
 body{
-  margin-top: 60px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -12,10 +11,13 @@ a{
   cursor: pointer;
 }
 
-.page-label{
-  font-size: 30px;
-  color: mediumblue;
+.page-label, .m-heading-1, .border-green{
+  padding-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 10px;
 }
+
 .navbar{
   width: 100%;
 }
@@ -31,10 +33,6 @@ a{
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
-}
-
-{
-  vertical-align: 0%;
 }
 
 .box

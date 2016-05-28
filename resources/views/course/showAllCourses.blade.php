@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="page-label">Các khóa học</div>
-        <div class="col-md-3">
+        <div class="m-heading-1 border-green page-label">
+            Các khóa học
         </div>
         <div class="col-md-9">
             <table class="table-display">
@@ -41,7 +41,7 @@
                         <td>Học kì 2 năm học 2015-2016</td>
                         @if (!$course->joined)
                         <td>
-                            <a data-toggle="modal" data-target="#enroll-modal">Tham gia</a>
+                            <a class="btn green-jungle" data-toggle="modal" data-target="#enroll-modal">Tham gia</a>
                             <div class="modal fade" id="enroll-modal" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">

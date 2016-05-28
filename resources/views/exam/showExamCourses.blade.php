@@ -2,18 +2,19 @@
 
 @section('content')
     <div class="container">
-        <div class="page-label">Kì thi</div>
-        <div class="col-md-3">
+
+        <div class="m-heading-1 border-green page-label">
+            Danh sách kì thi
         </div>
         <div class="col-md-9">
             <table class="table-display">
                 <thead>
                 <tr>
-                    <td>Tên kì thi</td>
-                    <td>Thời gian bắt đầu</td>
-                    <td>Thời gian kết thúc</td>
-                    <td>Thời gian làm bài</td>
-                    <td>Trạng thái</td>
+                    <th>Tên kì thi</th>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Thời gian làm bài</th>
+                    <th>Trạng thái</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,7 +26,7 @@
                         <td>{{$exam->duration}} phút</td>
                         <td>
                             @if (!$exam->completed)
-                                <a data-toggle="modal" data-target="#enroll-modal-{{$exam->exam_id}}">Bắt đầu thi</a>
+                                <a class="btn red" data-toggle="modal" data-target="#enroll-modal-{{$exam->exam_id}}">Bắt đầu thi</a>
                                 <div class="modal fade" id="enroll-modal-{{$exam->exam_id}}" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content">

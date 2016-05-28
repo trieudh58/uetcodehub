@@ -52,9 +52,10 @@ class CourseController extends Controller
 
     public function showProblems($course_id)
     {
-        $courses = Auth::user()->courses->find($course_id);
-        $problems = $courses->problems;
-        return view('course.showProblems', compact('problems'));
+        $course = Auth::user()->courses->find($course_id);
+        $course_name = $course->course_name;
+        $problems = $course->problems;
+        return view('problem.showProblems', compact('problems'), compact('course_name'));
     }
 
     public function showProblemDetail($course_id, $problem_id)
@@ -63,6 +64,6 @@ class CourseController extends Controller
         $problems = $courses->problems;
         $problem = $problems->find($problem_id);
         $submissions = $problem->submissions;
-        return view('course.showProblemDetail', compact('course_id', 'problem', 'submissions'));
+        return view('problem.showProblemDetail', compact('course_id', 'problem', 'submissions'));
     }
 }

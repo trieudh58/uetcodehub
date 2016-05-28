@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="page-label">Các khóa học của bạn</div>
-        <div class="col-md-3">
+        <div class="m-heading-1 border-green page-label">
+            Các khóa học của bạn
         </div>
         <div class="col-md-9">
             @if(sizeof($courses) > 0)
