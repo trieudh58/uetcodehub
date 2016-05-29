@@ -3,6 +3,7 @@ $(document).ready(function() {
     "pagingType": "full_numbers",
     "bInfo": false,
     "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Tất cả"]],
+    "aaSorting": [],
     "language"  : {
       "lengthMenu": "Số lượng: _MENU_",
       "zeroRecords": "Không có tài liệu nào phù hợp",
@@ -20,3 +21,20 @@ $(document).ready(function() {
     });
 
 });
+
+$(function () {
+  setNavigation();
+});
+
+function setNavigation() {
+  var path = window.location.pathname;
+  path = path.replace(/\/$/, "");
+  path = decodeURIComponent(path);
+  $(".nav-item a").each(function () {
+    var href = $(this).attr('href');
+    if (path === href.substring(href.length - path.length)) {
+      $(this).closest('li').addClass('active');
+      $(this).closest('.start').addClass('active');
+    }
+  });
+}

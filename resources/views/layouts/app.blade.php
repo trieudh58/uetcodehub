@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
-    <link href="{{ URL::asset('css/stylesheet.css') }}" rel="stylesheet">
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -34,9 +33,9 @@
     <link href="{{ URL::asset('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- END THEME GLOBAL STYLES -->
     <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="{{ URL::asset('assets/layouts/layout/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('assets/layouts/layout/css/themes/darkblue.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="{{ URL::asset('assets/layouts/layout/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets/layouts/layout/css/layout.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets/layouts/layout/css/themes/default.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="{{ URL::asset('assets/layouts/layout/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
     <!-- JavaScripts -->
 
@@ -51,7 +50,7 @@
     <div class="page-header-inner ">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="{{ url('/')}}" class="logo-default">UET Codehub</a>
+            <a href="{{ url('/')}}" class="logo-default caption-subject font-red-thunderbird bold uppercase">UET Codehub</a>
             <div class="menu-toggler sidebar-toggler"> </div>
         </div>
         <!-- END LOGO -->
@@ -64,14 +63,14 @@
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Đăng nhập</a></li>
+                    <li><a class="font-red" href="{{ url('/login') }}">Đăng nhập</a></li>
                 @else
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <span class="username username-hide-on-mobile"> {{ Auth::user()->getFullName() }} </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-default bg-green">
+                        <ul class="dropdown-menu dropdown-menu-default bg-grey-silver">
                             <li>
                                 <a href="{{ url('/logout') }}">
                                     <i class="icon-key"></i> Đăng xuất</a>
@@ -103,7 +102,7 @@
                     <div class="sidebar-toggler"></div>
                     <!-- END SIDEBAR TOGGLER BUTTON -->
                 </li>
-                <li class="nav-item">
+                <li class="nav-item start">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-home"></i>
                         <span class="title">Khóa học</span>
@@ -122,7 +121,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item start">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                         <span class="title">Kì thi</span>
@@ -146,7 +145,7 @@
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <!-- BEGIN CONTENT BODY -->
-        <div class="page-content">
+        <div class="page-content font-blue-dark">
             @yield('content')
         </div>
     </div>
@@ -175,7 +174,6 @@
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
     <script src="{{ URL::asset('assets/layouts/layout/scripts/layout.js') }}" type="text/javascript"></script>
-    <script src="{{ URL::asset('assets/layouts/layout/scripts/demo.min.js') }}" type="text/javascript"></script> <!-- END THEME LAYOUT SCRIPTS -->
     <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/script.js') }}"></script>
     @yield('script')
