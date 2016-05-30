@@ -57,7 +57,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane {{Session::get('is_submitted') == true ? '' : 'active'}}" id="editor-box">
                         {!! Form::open([
-                                'action' => array('JudgeController@submit', $course_id, $problem->problem_id),
+                                'action' => array('JudgeController@submit', $courseId, $problem->problemId),
                                 'method' => 'post',
                             ]) !!}
                         <div class="panel">
@@ -82,7 +82,7 @@
                                         <textarea class="form-control" name="source_code" id="source_code"></textarea>
                                     </div>
                                     @if(sizeof($submissions))
-                                        <div id="editor">{{$submissions[sizeof($submissions)-1]->source_code}}</div>
+                                        <div id="editor">{{$submissions[sizeof($submissions)-1]->sourceCode}}</div>
                                     @else
                                         <div id="editor"></div>
                                     @endif
@@ -103,7 +103,7 @@
                             @if (json_decode($submissions[sizeof($submissions) - 1]->result, true)['resultCode'] === 'AC')
                                 <div class="score">
                                     Điểm:
-                                    <span> {{$submissions[sizeof($submissions) - 1]->result_score}} </span>
+                                    <span> {{$submissions[sizeof($submissions) - 1]->resultScore}} </span>
                                 </div>
                                 <table class="table-display">
                                     <thead>

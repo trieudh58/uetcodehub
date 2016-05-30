@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    protected $primaryKey = 'course_id';
+    protected $primaryKey = 'courseId';
 
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'course_user');
+        return $this->belongsToMany('App\Models\User', 'courseusers');
     }
 
     public function createdUser()
     {
-        $created_user = User::find($this->created_user_id);
-        return $created_user->first_name.' '.$created_user->last_name;
+        $created_user = User::find($this->createdUserId);
+        return $created_user->firstname.' '.$created_user->lastname;
     }
 
     public function problems()
     {
-        return $this->belongsToMany('App\Models\Problem', 'course_problem')->withPivot('score_in_course', 'hard_level', 'is_active');
+        return $this->belongsToMany('App\Models\Problem', 'courseproblems', 'courseId', 'problemId')->withPivot('scoreInCourse', 'hardLevel', 'isActive');
     }
     
     public function exams()

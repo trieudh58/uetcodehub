@@ -21,9 +21,9 @@
                     <tr>
                         <td>Bài {{$index + 1}}</td>
                         <td>{{substr($problem->content, 0, 100)}}... </td>
-                        <td>{{$problem->pivot->score_in_exam}} </td>
-                        <td>{{$problem->time_limit}} s</td>
-                        <td><a href="{{url('/exams/'.$exam_id.'/problems/'.$problem->problem_id)}}">Làm bài</a></td>
+                        <td>{{$problem->pivot->scoreInExam}} </td>
+                        <td>{{$problem->timeLimit}} s</td>
+                        <td><a href="{{url('/exams/'.$examId.'/problems/'.$problem->problemId)}}">Làm bài</a></td>
                     </tr>
                 @endforeach
                 </tbody>

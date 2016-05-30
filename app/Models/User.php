@@ -6,14 +6,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'userId';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'username', 'first_name', 'last_name', 'email', 'password',
+        'username', 'firstname', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     public function getFullName()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->firstName.' '.$this->lastName;
     }
     
     public function problems()
@@ -37,6 +37,6 @@ class User extends Authenticatable
 
     public function courses()
     {
-        return $this->belongsToMany('App\Models\Course', 'course_user');
+        return $this->belongsToMany('App\Models\Course', 'courseusers', 'userId', 'courseId');
     }
 }

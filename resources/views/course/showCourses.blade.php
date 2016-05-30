@@ -19,12 +19,12 @@
                     <tbody>
                     @foreach ($courses as $course)
                         <tr>
-                            <td><a href="{{url('/my-courses/'.$course->course_id.'/problems')}}"> {{$course->course_name}} </a></td>
+                            <td><a href="{{url('/my-courses/'.$course->courseId.'/problems')}}"> {{$course->courseName}} </a></td>
                             <td> {{$course->createdUser()}} </td>
                             <td> {{$course->description}} </td>
                             <td>
                                 {!! Form::open([
-                                    'action' => array('CourseController@leaveCourse', $course->course_id),
+                                    'action' => array('CourseController@leaveCourse', $course->courseId),
                                     'class' => 'form-horizontal',
                                     'method' => 'post',
                                 ]) !!}

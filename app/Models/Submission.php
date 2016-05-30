@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Submission extends Model
 {
-    protected $primaryKey = 'submission_id';
+    protected $primaryKey = 'submissionId';
 
     public function problem()
     {

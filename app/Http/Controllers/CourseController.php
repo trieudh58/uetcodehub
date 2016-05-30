@@ -16,18 +16,18 @@ class CourseController extends Controller
 {
     public function showCourses()
     {
-        $courses = Auth::user()->courses->sortBy('course_name')->values();
+        $courses = Auth::user()->courses->sortBy('courseName')->values();
         return view('course.showCourses', compact('courses'));
     }
 
     public function showAllCourses()
     {
-        $courses = Course::orderBy('course_name')->get();
+        $courses = Course::orderBy('courseName')->get();
         $joined_courses = Auth::user()->courses;
         foreach ($courses as $c) {
             $c->joined = false;
             foreach ($joined_courses as $jc) {
-                if ($jc->course_id == $c->course_id) {
+                if ($jc->courseId == $c->courseId) {
                     $c->joined = true;
                     break;
                 }
@@ -36,33 +36,33 @@ class CourseController extends Controller
         return view('course.showAllCourses', compact('courses'));
     }
 
-    public function joinCourse($course_id)
+    public function joinCourse($courseId)
     {
         $user = Auth::user();
-        $user->courses()->attach($course_id);
+        $user->courses()->attach($courseId);
         return Redirect::back();
     }
 
-    public function leaveCourse($course_id)
+    public function leaveCourse($courseId)
     {
         $user = Auth::user();
-        $user->courses()->detach($course_id);
+        $user->courses()->detach($courseId);
         return Redirect::back();
     }
 
-    public function showProblems($course_id)
+    public function showProblems($courseId)
     {
-        $courses = Auth::user()->courses->find($course_id);
+        $courses = Auth::user()->courses->find($courseId);
         $problems = $courses->problems;
         return view('course.showProblems', compact('problems'));
     }
 
-    public function showProblemDetail($course_id, $problem_id)
+    public function showProblemDetail($courseId, $problemId)
     {
-        $courses = Auth::user()->courses->find($course_id);
+        $courses = Auth::user()->courses->find($courseId);
         $problems = $courses->problems;
-        $problem = $problems->find($problem_id);
+        $problem = $problems->find($problemId);
         $submissions = $problem->submissions;
-        return view('course.showProblemDetail', compact('course_id', 'problem', 'submissions'));
+        return view('course.showProblemDetail', compact('courseId', 'problem', 'submissions'));
     }
 }

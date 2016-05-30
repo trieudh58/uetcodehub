@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Problem extends Model
 {
-    protected $primaryKey = 'problem_id';
+    protected $primaryKey = 'problemId';
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -14,16 +14,16 @@ class Problem extends Model
 
     public function courses()
     {
-        return $this->belongsToMany('App\Models\Course', 'course_problem');
+        return $this->belongsToMany('App\Models\Course', 'courseProblems', 'courseId', 'problemId');
     }
 
     public function submissions()
     {
-        return $this->hasMany('App\Models\Submission');
+        return $this->hasMany('App\Models\Submission', 'submitId');
     }
 
     public function exams()
     {
-        return $this->belongsToMany('App\Models\Exam', 'exam_problem')->withPivot('score_in_exam', 'is_active');
+        return $this->belongsToMany('App\Models\Exam', 'examProblem')->withPivot('scoreInExam', 'isActive');
     }
 }

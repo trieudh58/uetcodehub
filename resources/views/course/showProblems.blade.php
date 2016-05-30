@@ -21,11 +21,11 @@
                         <tbody>
                         @foreach($problems as $index=>$p)
                             <tr>
-                                <td><a href="{{url(Request::path().'/'.$p->problem_id)}}">Bài {{$index + 1}}</a></td>
-                                <td width="300px">{{$p->tag_values}}</td>
-                                <td>{{$p->time_limit}}</td>
-                                <td>{{$p->pivot->hard_level}}</td>
-                                <td>{{$p->pivot->score_in_course}}</td>
+                                <td><a href="{{url(Request::path().'/'.$p->problemId)}}">Bài {{$index + 1}}</a></td>
+                                <td width="300px">{{$p->tagValues}}</td>
+                                <td>{{$p->timeLimit}}</td>
+                                <td>{{$p->pivot->hardLevel}}</td>
+                                <td>{{$p->pivot->scoreInCourse}}</td>
                                 <td>
                                     Bảo Triều truyền thêm submission
                                 </td>

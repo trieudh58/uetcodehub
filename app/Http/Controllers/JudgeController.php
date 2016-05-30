@@ -65,12 +65,12 @@ class JudgeController extends Controller
     {
         // Save submission to DB
         $submission = new Submission();
-        $submission->problem_id = $problem_id;
-        $submission->course_id = null;
-        $submission->exam_id = $exam_id;
-        $submission->user_id = Auth::user()->user_id;
+        $submission->problemId = $problem_id;
+        $submission->courseId = null;
+        $submission->examId = $exam_id;
+        $submission->userId = Auth::user()->user_id;
         $submission->language = $request->input('language');
-        $submission->source_code = $request->input('source_code');
+        $submission->sourceCode = $request->input('source_code');
         $submission->save();
 
         // Start judge service
@@ -83,10 +83,10 @@ class JudgeController extends Controller
         });
 
         $data = [
-            'problemId' => $submission->problem_id,
-            'sourceCode' => $submission->source_code,
+            'problemId' => $submission->problemId,
+            'sourceCode' => $submission->sourceCode,
             'language' => $submission->language,
-            'limitTime' => $submission->problem->time_limit,
+            'limitTime' => $submission->problem->timeLimit,
             'limitMemory' => 0,
             'isUseCustomCheck' => false,
         ];

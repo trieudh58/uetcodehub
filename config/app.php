@@ -157,7 +157,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Artisaninweb\SoapWrapper\ServiceProvider::class,
-
+        
+        Mpociot\LaravelTestFactoryHelper\TestFactoryHelperServiceProvider::class
     ],
 
     /*

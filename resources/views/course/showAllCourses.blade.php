@@ -19,7 +19,7 @@
                 @foreach ($courses as $course)
                     <tr>
                         <td>
-                            <a data-toggle="modal" data-target="#course-info-data">{{$course->course_name}}</a>
+                            <a data-toggle="modal" data-target="#course-info-data">{{$course->courseName}}</a>
                             <div class="modal fade" id="course-info-data" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -50,11 +50,11 @@
                                             <h4 class="modal-title">Xác nhận tham gia</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Bạn muốn tham gia lớp {{$course->course_name}}?</p>
+                                            <p>Bạn muốn tham gia lớp {{$course->courseName}}?</p>
                                         </div>
                                         <div class="modal-footer">
                                             {!! Form::open([
-                                                'action' => array('CourseController@joinCourse', $course->course_id),
+                                                'action' => array('CourseController@joinCourse', $course->courseId),
                                                 'class' => 'form-horizontal',
                                                 'method' => 'post',
                                             ]) !!}

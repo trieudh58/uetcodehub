@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "^5.2",
-        "artisaninweb/laravel-soap": "0.2.5.10"
+        "artisaninweb/laravel-soap": "0.2.5.10",
+        "mpociot/laravel-test-factory-helper": "^0.2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
