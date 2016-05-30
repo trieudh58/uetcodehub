@@ -15,6 +15,6 @@ class Exam extends Model
 
     public function problems()
     {
-        return $this->belongsToMany('App\Models\Problem', 'examProblems')->withPivot('scoreInExam', 'isActive');
+        return $this->belongsToMany('App\Models\Problem', 'examProblems', 'examId', 'problemId')->withPivot('scoreInExam', 'isActive');
     }
 }

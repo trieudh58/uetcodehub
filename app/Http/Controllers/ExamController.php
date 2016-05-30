@@ -15,18 +15,18 @@ class ExamController extends Controller
         return view('exam.showExamCourses', compact('exams'));
     }
     
-    public function showExamDetail($exam_id)
+    public function showExamDetail($examId)
     {
-        $exam = Exam::find($exam_id);
+        $exam = Exam::find($examId);
         $problems = $exam->problems;
         return view('exam.showExamDetail', compact('examId', 'problems'));
     }
 
-    public function showProblemDetail($exam_id, $problem_id)
+    public function showProblemDetail($examId, $problemId)
     {
-        $exam = Exam::find($exam_id);
+        $exam = Exam::find($examId);
         $problems = $exam->problems;
-        $problem = $problems->find($problem_id);
+        $problem = $problems->find($problemId);
         $submissions = $problem->submissions;
         return view('exam.showProblemDetail', compact('examId', 'problem', 'submissions'));
     }
