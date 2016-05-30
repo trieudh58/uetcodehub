@@ -57,7 +57,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane {{Session::get('is_submitted') == true ? '' : 'active'}}" id="editor-box">
                         {!! Form::open([
-                                'action' => array('JudgeController@submitExam', $exam_id, $problem->problemId),
+                                'action' => array('JudgeController@submitExam', $examId, $problem->problemId),
                                 'method' => 'post',
                             ]) !!}
                         <div class="panel">
