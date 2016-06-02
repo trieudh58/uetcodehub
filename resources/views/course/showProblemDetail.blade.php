@@ -100,42 +100,84 @@
                     </div>
                     <div role="tabpanel" class="tab-pane {{Session::get('is_submitted') == true ? 'active' : ''}}" id="result">
                         @if (sizeof($submissions))
-                            @if (json_decode($submissions[sizeof($submissions) - 1]->result, true)['resultCode'] === 'AC')
-                                <div class="score">
-                                    Điểm:
-                                    <span> {{$submissions[sizeof($submissions) - 1]->resultScore}} </span>
-                                </div>
-                                <table class="table-display">
-                                    <thead>
-                                    <tr>
-                                        <th>Tên test</th>
-                                        <th>Kết quả</th>
-                                        <th>Thông báo</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach (json_decode($submissions[sizeof($submissions) - 1]->result, true)['testDetail'] as $test)
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Result</td>
+                                    <td>Score</td>
+                                    <td>Message</td>
+                                </tr>
+                                </thead>
+                            @foreach($submissions as $submission)
+                                <?php $resultDetail = json_decode($submission->result, true) ?>
+                                <tr>
+
+                                    <td>
+                                        {{$submission->submitId}}
+                                    </td>
+                                    <td>
+                                        {{$resultDetail['resultCode']}}
+                                    </td>
+                                    @if($resultDetail['resultCode'] === 'AC')
+                                        <td>
+                                            {{$resultDetail['score']}}
+                                        </td>
+                                        <td>
+                                            <?php $testDetail = $resultDetail['testDetail'] ?>
+                                            @foreach($testDetail as $tc)
+                                                {{$tc['testName']}} {{$tc['result']}} {{$tc['message']}} <br/>
+                                            @endforeach
+                                        </td>
+                                    @else
+                                        <td>
+                                            {{ 0  }}
+                                        </td>
+                                        <td>
+                                            {{ $resultDetail['message'] }}
+                                        </td>
+                                    @endif
+                                </tr>
+                                {{--
+                                @if (json_decode($submission->result, true)['resultCode'] === 'AC')
+                                    <div class="score">
+                                        Điểm:
+                                        <span> {{$submission->resultScore}} </span>
+                                    </div>
+                                    <table class="table-display">
+                                        <thead>
                                         <tr>
-                                            <td>{{$test['testName']}}</td>
-                                            <td>{{$test['result']}}</td>
-                                            <td>{{$test['message']}}</td>
+                                            <th>Tên test</th>
+                                            <th>Kết quả</th>
+                                            <th>Thông báo</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            @elseif (json_decode($submissions[sizeof($submissions) - 1]->result, true)['resultCode'] === 'CE')
-                                <div class="alert alert-danger">
-                                    <strong>{{json_decode($submissions[sizeof($submissions) - 1]->result, true)['message']}}</strong>
-                                </div>
-                            @elseif (json_decode($submissions[sizeof($submissions) - 1]->result, true)['resultCode'] === 'VS')
-                                <div class="alert alert-danger">
-                                    <strong>{{json_decode($submissions[sizeof($submissions) - 1]->result, true)['message']}}</strong>
-                                </div>
-                            @elseif (json_decode($submissions[sizeof($submissions) - 1]->result, true)['resultCode'] === 'NA')
-                                <div class="alert alert-danger">
-                                    <strong>{{json_decode($submissions[sizeof($submissions) - 1]->result, true)['message']}}</strong>
-                                </div>
-                            @endif
+                                        </thead>
+                                        <tbody>
+                                        @foreach (json_decode($submission->result, true)['testDetail'] as $test)
+                                            <tr>
+                                                <td>{{$test['testName']}}</td>
+                                                <td>{{$test['result']}}</td>
+                                                <td>{{$test['message']}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @elseif (json_decode($submission->result, true)['resultCode'] === 'CE')
+                                    <div class="alert alert-danger">
+                                        <strong>{{json_decode($submission->result, true)['message']}}</strong>
+                                    </div>
+                                @elseif (json_decode($submission->result, true)['resultCode'] === 'VS')
+                                    <div class="alert alert-danger">
+                                        <strong>{{json_decode($submission->result, true)['message']}}</strong>
+                                    </div>
+                                @elseif (json_decode($submission->result, true)['resultCode'] === 'NA')
+                                    <div class="alert alert-danger">
+                                        <strong>{{json_decode($submission->result, true)['message']}}</strong>
+                                    </div>
+                                @endif
+                                --}}
+                            @endforeach
+                            </table>
                         @else
                             <div class="alert alert-danger">
                                 <strong>Bạn chưa nộp bài!</strong>

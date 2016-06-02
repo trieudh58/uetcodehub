@@ -39,4 +39,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Course', 'courseusers', 'userId', 'courseId');
     }
+
+    public function submissions($courseId, $problemId){
+        $condition = ['courseId' => $courseId, 'problemId' => $problemId];
+        return
+            $this->hasMany('App\Models\Submission', 'userId')
+                 ->where($condition)->orderBy('submitId', 'desc')->get();
+    }
+
 }
