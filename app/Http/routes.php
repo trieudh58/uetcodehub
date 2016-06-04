@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::auth();
 
+Route::get('/sample', 'HomeController@sample');
+
 Route::get('/home', 'HomeController@index');
 Route::get('/my-courses', 'CourseController@showCourses')->middleware('auth');
 Route::get('/all-courses', 'CourseController@showAllCourses')->middleware('auth');

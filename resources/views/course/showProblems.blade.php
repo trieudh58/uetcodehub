@@ -4,9 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="page-label">Bài tập môn ...</div>
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-9">
+            <div>
                 @if(sizeof($problems) > 0)
                     <table class="table-display">
                         <thead>

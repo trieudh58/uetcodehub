@@ -81,11 +81,12 @@
                                     <div class="form-group" hidden>
                                         <textarea class="form-control" name="source_code" id="source_code"></textarea>
                                     </div>
-                                    @if(sizeof($submissions))
+
+                                    {{--@if(sizeof($submissions))
                                         <div id="editor">{{$submissions[sizeof($submissions)-1]->sourceCode}}</div>
                                     @else
                                         <div id="editor"></div>
-                                    @endif
+                                    @endif--}}
                                 </div>
                             </div>
                             <div class="form-group">

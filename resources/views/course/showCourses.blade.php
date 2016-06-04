@@ -3,9 +3,7 @@
 @section('content')
     <div class="container">
         <div class="page-label">Các khóa học của bạn</div>
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-9">
+        <div>
             @if(sizeof($courses) > 0)
                 <table class="table-display">
                     <thead>

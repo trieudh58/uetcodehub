@@ -3,9 +3,7 @@
 @section('content')
     <div class="container">
         <div class="page-label">Các khóa học</div>
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-9">
+        <div>
             <table class="table-display">
                 <thead>
                 <tr>
