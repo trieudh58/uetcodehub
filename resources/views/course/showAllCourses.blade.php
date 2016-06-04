@@ -1,85 +1,108 @@
 @extends('layouts.app')
 
+{{--@section('pageTitle')--}}
+    {{--All courses--}}
+{{--@endsection--}}
+
 @section('content')
-    <div class="container">
-        <div class="page-label">Các khóa học</div>
-        <div>
-            <table class="table-display">
-                <thead>
-                <tr>
-                    <th>Tên khóa học</th>
-                    <th>Giảng viên</th>
-                    <th>Kì học</th>
-                    <th>Trạng thái</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($courses as $course)
+
+    <div class="portlet light portlet-fit full-height-content full-height-content-scrollable ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class=" icon-layers font-green"></i>
+                <span class="caption-subject font-green bold uppercase">All Courses</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="table-scrollable table-scrollable-borderless">
+                <table class="table table-hover table-light">
+                    <thead>
                     <tr>
-                        <td>
-                            <a data-toggle="modal" data-target="#course-info-data">{{$course->courseName}}</a>
-                            <div class="modal fade" id="course-info-data" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Thông tin khóa học</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>{{$course->description}}</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        <th>Tên khóa học</th>
+                        <th>Giảng viên</th>
+                        <th>Kì học</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($courses as $course)
+                        <tr>
+                            <td>
+                                <a data-toggle="modal" data-target="#course-info-data">{{$course->courseName}}</a>
+                                <div class="modal fade" id="course-info-data" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Thông tin khóa học</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>{{$course->description}}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Đóng
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>{{$course->createdUser()}}</td>
-                        <td>Học kì 2 năm học 2015-2016</td>
-                        @if (!$course->joined)
-                        <td>
-                            <a data-toggle="modal" data-target="#enroll-modal">Tham gia</a>
-                            <div class="modal fade" id="enroll-modal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Xác nhận tham gia</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Bạn muốn tham gia lớp {{$course->courseName}}?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            {!! Form::open([
-                                                'action' => array('CourseController@joinCourse', $course->courseId),
-                                                'class' => 'form-horizontal',
-                                                'method' => 'post',
-                                            ]) !!}
-                                            <div class="form-group">
-                                                <div>
-                                                    <button type="submit" class="btn btn-primary">
-                                                        Tham gia lớp
-                                                    </button>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                            </td>
+                            <td>{{$course->createdUser()}}</td>
+                            <td>Học kì 2 năm học 2015-2016</td>
+                            @if (!$course->joined)
+                                <td>
+                                    <a data-toggle="modal" data-target="#enroll-modal">Tham gia</a>
+                                    <div class="modal fade" id="enroll-modal" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Xác nhận tham gia</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Bạn muốn tham gia lớp {{$course->courseName}}?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    {!! Form::open([
+                                                        'action' => array('CourseController@joinCourse', $course->courseId),
+                                                        'class' => 'form-horizontal',
+                                                        'method' => 'post',
+                                                    ]) !!}
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Tham gia lớp
+                                                            </button>
+                                                            <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">
+                                                                Hủy bỏ
+                                                            </button>
 
+                                                        </div>
+                                                    </div>
+                                                    {!! Form::close() !!}
                                                 </div>
                                             </div>
-                                            {!! Form::close() !!}
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            </td>
-                        @else
-                        <td>
-                            <p>Đã tham gia</p>
-                        </td>
-                        @endif
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+                                </td>
+                            @else
+                                <td>
+                                    <p>Đã tham gia</p>
+                                </td>
+                            @endif
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </div>
+
+
+
 @endsection

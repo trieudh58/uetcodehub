@@ -1,12 +1,22 @@
 @extends('layouts.app')
 
+{{--@section('pageTitle')--}}
+    {{--Môn học ...--}}
+{{--@endsection--}}
+
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="page-label">Bài tập môn ...</div>
-            <div>
-                @if(sizeof($problems) > 0)
-                    <table class="table-display">
+
+    <div class="portlet light portlet-fit full-height-content full-height-content-scrollable ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class=" icon-layers font-green"></i>
+                <span class="caption-subject font-green bold uppercase">Course ...</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+            @if(sizeof($problems) > 0)
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-hover table-light">
                         <thead>
                         <tr>
                             <th>Thứ tự</th>
@@ -25,17 +35,25 @@
                                 <td>{{$p->pivot->hardLevel}}</td>
                                 <td>{{$p->pivot->scoreInCourse}}</td>
                                 <td>
-                                    Bảo Triều truyền thêm submission
+                                    @if($p->isActive)
+                                        Active
+                                    @else
+                                        Inactive
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                         </thead>
                     </table>
-                @else
-                    Chưa có bài tập nào!
-                @endif
-            </div>
+                </div>
+            @else
+                Chưa có bài tập nào!
+            @endif
+
         </div>
     </div>
+
+
+
 @endsection

@@ -1,10 +1,20 @@
 @extends('layouts.app')
 
+{{--@section('pageTitle')--}}
+{{--Exams--}}
+{{--@endsection--}}
+
 @section('content')
-    <div class="container">
-        <div class="page-label">Kì thi</div>
-        <div>
-            <table class="table-display">
+
+    <div class="portlet light portlet-fit full-height-content full-height-content-scrollable ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class=" icon-layers font-green"></i>
+                <span class="caption-subject font-green bold uppercase">Exams</span>
+            </div>
+        </div>
+        <div class="table-scrollable table-scrollable-borderless">
+            <table class="table table-hover table-light">
                 <thead>
                 <tr>
                     <td>Tên kì thi</td>
@@ -28,15 +38,21 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
                                                 <h4 class="modal-title">Xác nhận tham gia</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <p>Bạn muốn bắt đầu kì thi {{$exam->examName}}?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="location.href='{{url('/exams/'.$exam->examId)}}';">Đồng ý</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                        onclick="location.href='{{url('/exams/'.$exam->examId)}}';">Đồng
+                                                    ý
+                                                </button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy
+                                                    bỏ
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -51,4 +67,5 @@
             </table>
         </div>
     </div>
+
 @endsection
