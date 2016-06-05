@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('extendedHead')
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+@endsection
+
 @section('script')
     <script type="text/javascript">
         $('#expand-button').click(function (e) {
@@ -30,9 +35,39 @@
             textarea.val(editor.getSession().getValue());
         });
         textarea.val(editor.getSession().getValue());
-        document.getElementById("editor").style.width="100%"
-        document.getElementById("editor").style.height="300px"
+        document.getElementById("editor").style.width = "100%"
+        document.getElementById("editor").style.height = "300px"
+    </script>
 
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            {{--$('#submit-button').click(function () {--}}
+                {{--$.get('{{url('/submitAjax')}}', function(data){--}}
+                    {{--$('#ajaxDemoContent').append(data);--}}
+                    {{--console.log(data);--}}
+                {{--});--}}
+            {{--});--}}
+            $('#frmSubmit').submit(function () {
+                var _sourceCode = $('#source_code').val();
+                var _language = $('#language').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('/submitPostAjax')}}",
+                    data: {sourceCode: _sourceCode, language: _language, courseId: {{$courseId}}, problemId: {{$problem->problemId}}},
+                    success: function (data) {
+                        console.log(data);
+                        $('#ajaxDemoContent').html(data);
+                    }
+                });
+            });
+        });
     </script>
 @stop
 @section('content')
@@ -77,101 +112,114 @@
                             <div role="tabpanel"
                                  class="tab-pane {{Session::get('is_submitted') == true ? '' : 'active'}}"
                                  id="editor-box">
-                                {!! Form::open([
-                                        'action' => array('JudgeController@submit', $courseId, $problem->problemId),
-                                        'method' => 'post',
-                                    ]) !!}
-                                <div class="panel">
-                                    <div class="box">
-                                        <div class="box-header">
-                                            <div class="col-md-10">
-                                                <div class="form-group" style="width:150px">
-                                                    <select class="form-control" name="language" id="language"
-                                                            onchange="changeLanguage()">
-                                                        <option>C++</option>
-                                                        <option>Java</option>
-                                                    </select>
-                                                </div>
+                                {{--{!! Form::open([--}}
+                                {{--'action' => array('JudgeController@submit', $courseId, $problem->problemId),--}}
+                                {{--'method' => 'post',--}}
+                                {{--]) !!}--}}
+                                {{--{!! Form::open([--}}
+                                {{--'action' => array('JudgeController@submitAjax', $courseId, $problem->problemId),--}}
+                                {{--'method' => 'post',--}}
+                                {{--]) !!}--}}
+                                <form id="frmSubmit" onsubmit="return false">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <div class="panel">
+                                        <div class="box">
+                                            <div class="box-header">
+
                                             </div>
-                                            <div class="col-md-2">
-                                                <div class="box-icon pull-right">
-                                                    <a id="expand-button" title="Expand" role="button"><i
-                                                                class="fa fa-expand" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="box-content">
-                                            <div class="form-group" hidden>
+                                            <div class="box-content">
+                                                <div class="form-group" hidden>
                                                 <textarea class="form-control" name="source_code"
                                                           id="source_code"></textarea>
-                                            </div>
-
-                                            @if(sizeof($submissions))
-                                                <div id="editor">{{$submissions[sizeof($submissions)-1]->sourceCode}}</div>
-                                            @else
+                                                </div>
                                                 <div id="editor"></div>
-                                            @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div>
-                                            <button class="btn btn-primary pull-right" type="submit" id="submit-button">
+                                        <div class="form-group" style="margin-top: 5px">
+                                            <div class="pull-left" style="width:150px">
+                                                <select class="form-control" name="language" id="language"
+                                                        onchange="changeLanguage()">
+                                                    <option value="Cpp">C++</option>
+                                                    <option value="Java">Java</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <input class="btn btn-primary pull-right" type="submit"
+                                                       id="submit-button">
                                                 Submit
-                                            </button>
+                                                </input>
+                                            </div>
                                         </div>
+                                        <div style="clear: both"></div>
+                                        <div id="ajaxDemoContent">Demo content</div>
                                     </div>
-                                </div>
-                                {!! Form::close() !!}
+                                </form>
+                                {{--                                {!! Form::close() !!}--}}
                             </div>
                             <div role="tabpanel"
                                  class="tab-pane {{Session::get('is_submitted') == true ? 'active' : ''}}" id="result">
-                                @if (sizeof($submissions))
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <td>Id</td>
-                                            <td>Result</td>
-                                            <td>Score</td>
-                                            <td>Message</td>
-                                        </tr>
-                                        </thead>
-                                        @foreach($submissions as $submission)
-                                            <?php $resultDetail = json_decode($submission->result, true) ?>
-                                            <tr>
 
-                                                <td>
-                                                    {{$submission->submitId}}
-                                                </td>
-                                                <td>
-                                                    {{$resultDetail['resultCode']}}
-                                                </td>
-                                                @if($resultDetail['resultCode'] === 'AC')
-                                                    <td>
-                                                        {{$resultDetail['score']}}
-                                                    </td>
-                                                    <td>
-                                                        <?php $testDetail = $resultDetail['testDetail'] ?>
-                                                        @foreach($testDetail as $tc)
-                                                            {{$tc['testName']}} {{$tc['result']}} {{$tc['message']}}
-                                                            <br/>
-                                                        @endforeach
-                                                    </td>
-                                                @else
-                                                    <td>
-                                                        {{ 0  }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $resultDetail['message'] }}
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                        @endforeach
-                                    </table>
+                                @if (sizeof($submissions))
+                                    <div class="portlet box red">
+                                        <div class="portlet-title">
+                                            <div class="caption">All Result</div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div class="table-scrollable">
+                                                <table class="table table-condensed table-hover" id="tblResult">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>#</td>
+                                                        <td>Score</td>
+                                                        <td>Message</td>
+                                                        <td>Status</td>
+                                                    </tr>
+                                                    </thead>
+                                                    @foreach($submissions as $submission)
+                                                        <?php $resultDetail = json_decode($submission->result, true) ?>
+                                                        <tr>
+                                                            <td>
+                                                                {{$submission->submitId}}
+                                                            </td>
+                                                            @if($resultDetail['resultCode'] === 'AC')
+                                                                <td>{{$resultDetail['score']}}</td>
+                                                                <td>
+                                                                    <?php $testDetail = $resultDetail['testDetail'] ?>
+                                                                    @foreach($testDetail as $tc)
+                                                                        {{$tc['testName']}} {{$tc['result']}} {{$tc['message']}}
+                                                                        <br/>
+                                                                    @endforeach
+                                                                </td>
+                                                                <td>
+                                                                    <span class="label label-sm label-success">Accept</span>
+                                                                </td>
+                                                            @elseif(!$resultDetail['resultCode'])
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                                <td>
+                                                                    <span class="label label-sm label-info">Pending</span>
+                                                                </td>
+                                                            @else
+                                                                <td>0</td>
+                                                                <td>{{$resultDetail['message']}}</td>
+                                                                <td>
+                                                                    <span class="label label-sm label-danger">Fail</span>
+                                                                </td>
+                                                            @endif
+
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @else
                                     <div class="alert alert-danger">
                                         <strong>Bạn chưa nộp bài!</strong>
                                     </div>
                                 @endif
+
+
                             </div>
                         </div>
                     </div>

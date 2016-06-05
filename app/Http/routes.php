@@ -30,8 +30,24 @@ Route::get('/exams', 'ExamController@showExamCourses')->middleware('auth');
 Route::get('/exams/{exam_id}', 'ExamController@showExamDetail')->middleware('auth');
 Route::get('/exams/{exam_id}/problems/{problem_id}', 'ExamController@showProblemDetail')->middleware('auth');
 
+Route::get('/submitAjax', function(){
+    if(Request::ajax()){
+        return 'ajax data';
+    }
+});
+
 
 Route::post('/join/{course_id}', 'CourseController@joinCourse')->middleware('auth');
 Route::post('/leave/{course_id}', 'CourseController@leaveCourse')->middleware('auth');
 Route::post('/submit/{course_id}/{problem_id}', 'JudgeController@submit')->middleware('auth');
+//Route::post('/submit/{course_id}/{problem_id}', 'JudgeController@submitAjax')->middleware('auth');
 Route::post('/submit-exam/{exam_id}/{problem_id}', 'JudgeController@submitExam')->middleware('auth');
+
+//Route::post('/submitPostAjax', function(){
+//    if(Request::ajax()){
+//        //return var_dump(Request::all());
+//        return $_POST['language'] . ' ' . $_POST['sourceCode'];
+//    }
+//});
+
+Route::post('submitPostAjax', ['uses' => 'JudgeController@submitAjax']);

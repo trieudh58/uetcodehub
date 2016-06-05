@@ -60,7 +60,8 @@ License: You must have a valid license purchased only from themeforest(the above
           id="style_color"/>
     <link href="{{URL::asset('assets/layouts/layout2/css/custom.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- END THEME LAYOUT STYLES -->
-    <link rel="shortcut icon" href="favicon.ico"/>
+    {{--<link rel="shortcut icon" href="favicon.ico"/>--}}
+    @yield('extendedHead')
 </head>
 <!-- END HEAD -->
 
@@ -71,7 +72,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="page-header-inner ">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="index.html">
+            <a href="{{url('/')}}">
                 <img src="{{URL::asset('assets/layouts/layout2/img/CodehubLogo.png')}}" alt="logo"
                      class="logo-default"/> </a>
             <div class="menu-toggler sidebar-toggler">
@@ -176,7 +177,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </li>
                             </ul>
                         </li>
-                    @endif
+                        @endif
                                 <!-- END USER LOGIN DROPDOWN -->
                 </ul>
             </div>
@@ -215,8 +216,8 @@ License: You must have a valid license purchased only from themeforest(the above
                         <span class="arrow open"></span>
                     </a>
                 </li>
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item ">
+                    <a href="{{url('/my-courses')}}" class="nav-link nav-toggle">
                         <i class="icon-diamond"></i>
                         <span class="title">Courses</span>
                         <span class="arrow"></span>
@@ -317,19 +318,19 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{URL::asset('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js')}}"
         type="text/javascript"></script>
 <script src="{{URL::asset('assets/global/plugins/jquery.sparkline.min.js')}}" type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js')}}" type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js')}}"
-        type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js')}}"
-        type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js')}}"
-        type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js')}}"
-        type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js')}}"
-        type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js')}}"
-        type="text/javascript"></script>
+{{--<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js')}}" type="text/javascript"></script>--}}
+{{--<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js')}}"--}}
+        {{--type="text/javascript"></script>--}}
+{{--<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js')}}"--}}
+        {{--type="text/javascript"></script>--}}
+{{--<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js')}}"--}}
+        {{--type="text/javascript"></script>--}}
+{{--<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js')}}"--}}
+        {{--type="text/javascript"></script>--}}
+{{--<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js')}}"--}}
+        {{--type="text/javascript"></script>--}}
+{{--<script src="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js')}}"--}}
+        {{--type="text/javascript"></script>--}}
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="{{URL::asset('assets/global/scripts/app.min.js')}}" type="text/javascript"></script>
@@ -339,8 +340,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <script src="{{URL::asset('assets/layouts/layout2/scripts/layout.min.js')}}" type="text/javascript"></script>
-<script src="{{URL::asset('assets/layouts/layout2/scripts/demo.min.js')}}/" type="text/javascript"></script>
-<script src="{{URL::asset('assets/layouts/global/scripts/quick-sidebar.min.js')}}/" type="text/javascript"></script>
+<script src="{{URL::asset('assets/layouts/layout2/scripts/demo.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('assets/layouts/global/scripts/quick-sidebar.min.js')}}" type="text/javascript"></script>
 @yield('script')
         <!-- END THEME LAYOUT SCRIPTS -->
 </body>
