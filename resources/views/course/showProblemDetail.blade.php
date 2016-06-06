@@ -47,12 +47,7 @@
         });
 
         $(document).ready(function () {
-            {{--$('#submit-button').click(function () {--}}
-                {{--$.get('{{url('/submitAjax')}}', function(data){--}}
-                    {{--$('#ajaxDemoContent').append(data);--}}
-                    {{--console.log(data);--}}
-                {{--});--}}
-            {{--});--}}
+            $('#mytabs').tabs();
             $('#frmSubmit').submit(function () {
                 var _sourceCode = $('#source_code').val();
                 var _language = $('#language').val();
@@ -60,10 +55,58 @@
                 $.ajax({
                     type: "POST",
                     url: "{{url('/submitPostAjax')}}",
+                    timeout: 5000,
                     data: {sourceCode: _sourceCode, language: _language, courseId: {{$courseId}}, problemId: {{$problem->problemId}}},
                     success: function (data) {
                         console.log(data);
-                        $('#ajaxDemoContent').html(data);
+//                        if(data == 'OK'){
+//                            $('#mytabs').tabs("option", "active", 1);
+//                            $('#ajaxDemoContent').html('Submit success. Waiting for score ...');
+//                            var newRow =
+//                                    '<tr>' +
+//                                    '<td>?</td>' +
+//                                    '<td>?</td>' +
+//                                    '<td>?</td>' +
+//                                    '<td>?</td>' +
+//                                    '</tr>';
+//                            $('#tblResult > tbody > tr:first').before(newRow);
+//
+//
+//                        }else if(data == 'Error'){
+//                            alert('Fail to submit');
+//                        }
+                        var jsonData = JSON.parse(data);
+                        switch(jsonData['resultCode']){
+                            case 'CE':
+                                var newRow =
+                                        '<tr>' +
+                                        '<td>?</td>' +
+                                        '<td>0</td>' +
+                                        '<td>'+jsonData['message']+'</td>' +
+                                        '<td>'+jsonData['resultCode']+'</td>' +
+                                        '</tr>';
+                                break;
+                            case 'AC':
+                                var newRow =
+                                        '<tr>' +
+                                        '<td>?</td>' +
+                                        '<td>'+jsonData['score']+'</td>';
+                                newRow += '<td>';
+                                /*for(var tc in jsonData['testDetail']){
+                                    newRow += tc + '<br/>';
+                                }*/
+                                newRow +=  jsonData['testDetail'];
+                                newRow += '</td>';
+                                newRow += '<td>'+jsonData['resultCode']+'</td>' +
+                                        '</tr>';
+                                break;
+                        }
+                        $('#tblResult > tbody > tr:first').before(newRow);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        alert(xhr.status);
+                        alert(ajaxOptions);
+                        alert(thrownError);
                     }
                 });
             });
@@ -100,7 +143,7 @@
         <div class="col-md-8">
             <div class="portlet light portlet-fit full-height-content full-height-content-scrollable ">
                 <div class="portlet-body">
-                    <div role="tabpanel">
+                    <div id="mytabs" role="tabpanel">
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class=""><a href="#editor-box" aria-controls="editor-box" role="tab"
                                                                 data-toggle="tab" aria-expanded="false">Mã nguồn</a>
@@ -144,21 +187,21 @@
                                                 </select>
                                             </div>
                                             <div>
-                                                <input class="btn btn-primary pull-right" type="submit"
+                                                <button class="btn btn-primary pull-right" type="submit"
                                                        id="submit-button">
                                                 Submit
-                                                </input>
+                                                </button>
                                             </div>
                                         </div>
                                         <div style="clear: both"></div>
-                                        <div id="ajaxDemoContent">Demo content</div>
+
                                     </div>
                                 </form>
                                 {{--                                {!! Form::close() !!}--}}
                             </div>
                             <div role="tabpanel"
                                  class="tab-pane {{Session::get('is_submitted') == true ? 'active' : ''}}" id="result">
-
+                                <div id="ajaxDemoContent">Demo content</div>
                                 @if (sizeof($submissions))
                                     <div class="portlet box red">
                                         <div class="portlet-title">
