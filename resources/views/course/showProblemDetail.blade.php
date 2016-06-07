@@ -67,6 +67,13 @@
                     data: {sourceCode: _sourceCode, language: _language, courseId: {{$courseId}}, problemId: {{$problem->problemId}}},
                     success: function (data) {
                         console.log(data);//
+                        if(data == 'OK'){
+                            alert('submit OK');
+                            $('#mytabs').tabs("option", "active", 1);
+                        }else{
+                            alert('something wrong');
+                        }
+
                     },
                     error: function(xhr, ajaxOptions, thrownError){
                         alert(xhr.status);

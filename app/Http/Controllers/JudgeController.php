@@ -112,7 +112,38 @@ class JudgeController extends Controller
     public function submitAjax(Request $request)
     {
 
-        $result = '';
+        try{
+            // Save submission to DB
+            $this->submission = new Submission();
+            $this->submission->problemId = $request->input('problemId');
+            $this->submission->courseId = $request->input('courseId');
+            $this->submission->examId = null;
+            $this->submission->userId = Auth::user()->userId;
+            $this->submission->language = $request->input('language');
+            $this->submission->sourceCode = $request->input('sourceCode');
+            $this->submission->save();
+
+            $client = new \SoapClient("http://localhost:8080/CodehubJudgeAssistant/SubmitService?wsdl", array('cache_wsdl' => WSDL_CACHE_NONE));
+            $submitData = new \stdClass();
+            $submitData->submitId = $this->submission->submitId;
+            $submitData->problemId = $this->submission->problemId;
+            $submitData->sourceCode = $this->submission->sourceCode;
+            $submitData->language = $this->submission->language;
+            $submitData->limitTime = $this->submission->problem->timelimit;
+            $submitData->limitMemory = 0;
+            $submitData->isUseCustomCheck = false;
+            $client->submit($submitData);
+
+            return 'OK';
+        }catch(\Exception $ex){
+            echo $ex->getMessage();
+            return 'Error';
+        }
+
+
+    }
+
+    function saveSubmission(Request $request){
         try{
             // Save submission to DB
             $this->submission = new Submission();
@@ -124,13 +155,11 @@ class JudgeController extends Controller
             $this->submission->sourceCode = $request->input('sourceCode');
             //while(1);
             //$a = 1/0;
-            //$this->submission->save();
+            $this->submission->save();
             return 'OK';
         }catch(\Exception $ex){
             return 'Error';
         }
-
-
     }
 
     public function callJudge(){
