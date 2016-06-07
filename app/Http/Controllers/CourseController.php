@@ -62,7 +62,7 @@ class CourseController extends Controller
         $courses = Auth::user()->courses->find($courseId);
         $problems = $courses->problems;
         $problem = $problems->find($problemId);
-        $submissions = Auth::user()->submissions($courseId, $problemId);
-        return view('course.showProblemDetail', compact('courseId', 'problem', 'submissions'));
+        //$submissions = Auth::user()->submissions($courseId, $problemId);
+        return view('course.showProblemDetail', compact('courseId', 'problem'));
     }
 }

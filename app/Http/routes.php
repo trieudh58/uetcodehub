@@ -26,9 +26,11 @@ Route::get('/my-courses', 'CourseController@showCourses')->middleware('auth');
 Route::get('/all-courses', 'CourseController@showAllCourses')->middleware('auth');
 Route::get('/my-courses/{course_id}/problems', 'CourseController@showProblems')->middleware('auth');
 Route::get('/my-courses/{course_id}/problems/{problem_id}', 'CourseController@showProblemDetail')->middleware('auth');
+Route::get('/my-courses/{course_id}/problems/{problem_id}/submissionTable', 'SubmissionController@submissionDetail')->middleware('auth');
 Route::get('/exams', 'ExamController@showExamCourses')->middleware('auth');
 Route::get('/exams/{exam_id}', 'ExamController@showExamDetail')->middleware('auth');
 Route::get('/exams/{exam_id}/problems/{problem_id}', 'ExamController@showProblemDetail')->middleware('auth');
+
 
 Route::get('/submitAjax', function(){
     if(Request::ajax()){

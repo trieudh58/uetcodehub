@@ -48,60 +48,25 @@
 
         $(document).ready(function () {
             $('#mytabs').tabs();
+
+            $(function() {
+                function callAjax(){
+                    console.log('{{url(Request::path().'/submissionTable')}}');
+                    $('#result').load('{{url(Request::path().'/submissionTable')}}')
+                }
+                setInterval(callAjax, 5000 );
+            });
+
             $('#frmSubmit').submit(function () {
                 var _sourceCode = $('#source_code').val();
                 var _language = $('#language').val();
-
                 $.ajax({
                     type: "POST",
                     url: "{{url('/submitPostAjax')}}",
                     timeout: 5000,
                     data: {sourceCode: _sourceCode, language: _language, courseId: {{$courseId}}, problemId: {{$problem->problemId}}},
                     success: function (data) {
-                        console.log(data);
-//                        if(data == 'OK'){
-//                            $('#mytabs').tabs("option", "active", 1);
-//                            $('#ajaxDemoContent').html('Submit success. Waiting for score ...');
-//                            var newRow =
-//                                    '<tr>' +
-//                                    '<td>?</td>' +
-//                                    '<td>?</td>' +
-//                                    '<td>?</td>' +
-//                                    '<td>?</td>' +
-//                                    '</tr>';
-//                            $('#tblResult > tbody > tr:first').before(newRow);
-//
-//
-//                        }else if(data == 'Error'){
-//                            alert('Fail to submit');
-//                        }
-                        var jsonData = JSON.parse(data);
-                        switch(jsonData['resultCode']){
-                            case 'CE':
-                                var newRow =
-                                        '<tr>' +
-                                        '<td>?</td>' +
-                                        '<td>0</td>' +
-                                        '<td>'+jsonData['message']+'</td>' +
-                                        '<td>'+jsonData['resultCode']+'</td>' +
-                                        '</tr>';
-                                break;
-                            case 'AC':
-                                var newRow =
-                                        '<tr>' +
-                                        '<td>?</td>' +
-                                        '<td>'+jsonData['score']+'</td>';
-                                newRow += '<td>';
-                                /*for(var tc in jsonData['testDetail']){
-                                    newRow += tc + '<br/>';
-                                }*/
-                                newRow +=  jsonData['testDetail'];
-                                newRow += '</td>';
-                                newRow += '<td>'+jsonData['resultCode']+'</td>' +
-                                        '</tr>';
-                                break;
-                        }
-                        $('#tblResult > tbody > tr:first').before(newRow);
+                        console.log(data);//
                     },
                     error: function(xhr, ajaxOptions, thrownError){
                         alert(xhr.status);
@@ -202,67 +167,7 @@
                             <div role="tabpanel"
                                  class="tab-pane {{Session::get('is_submitted') == true ? 'active' : ''}}" id="result">
                                 <div id="ajaxDemoContent">Demo content</div>
-                                @if (sizeof($submissions))
-                                    <div class="portlet box red">
-                                        <div class="portlet-title">
-                                            <div class="caption">All Result</div>
-                                        </div>
-                                        <div class="portlet-body">
-                                            <div class="table-scrollable">
-                                                <table class="table table-condensed table-hover" id="tblResult">
-                                                    <thead>
-                                                    <tr>
-                                                        <td>#</td>
-                                                        <td>Score</td>
-                                                        <td>Message</td>
-                                                        <td>Status</td>
-                                                    </tr>
-                                                    </thead>
-                                                    @foreach($submissions as $submission)
-                                                        <?php $resultDetail = json_decode($submission->result, true) ?>
-                                                        <tr>
-                                                            <td>
-                                                                {{$submission->submitId}}
-                                                            </td>
-                                                            @if($resultDetail['resultCode'] === 'AC')
-                                                                <td>{{$resultDetail['score']}}</td>
-                                                                <td>
-                                                                    <?php $testDetail = $resultDetail['testDetail'] ?>
-                                                                    @foreach($testDetail as $tc)
-                                                                        {{$tc['testName']}} {{$tc['result']}} {{$tc['message']}}
-                                                                        <br/>
-                                                                    @endforeach
-                                                                </td>
-                                                                <td>
-                                                                    <span class="label label-sm label-success">Accept</span>
-                                                                </td>
-                                                            @elseif(!$resultDetail['resultCode'])
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                                <td>
-                                                                    <span class="label label-sm label-info">Pending</span>
-                                                                </td>
-                                                            @else
-                                                                <td>0</td>
-                                                                <td>{{$resultDetail['message']}}</td>
-                                                                <td>
-                                                                    <span class="label label-sm label-danger">Fail</span>
-                                                                </td>
-                                                            @endif
-
-                                                        </tr>
-                                                    @endforeach
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="alert alert-danger">
-                                        <strong>Bạn chưa nộp bài!</strong>
-                                    </div>
-                                @endif
-
-
+                                {{--@include(url('/'))--}}
                             </div>
                         </div>
                     </div>

@@ -112,8 +112,8 @@ class JudgeController extends Controller
     public function submitAjax(Request $request)
     {
 
-        //$result = '';
-        //try{
+        $result = '';
+        try{
             // Save submission to DB
             $this->submission = new Submission();
             $this->submission->problemId = $request->input('problemId');
@@ -125,40 +125,12 @@ class JudgeController extends Controller
             //while(1);
             //$a = 1/0;
             //$this->submission->save();
-            //return 'OK';
-        //}catch(\Exception $ex){
-        //    return 'Error';
-        //}
+            return 'OK';
+        }catch(\Exception $ex){
+            return 'Error';
+        }
 
-        // Start judge service
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('judge')
-                ->wsdl('http://codehub.now-ip.org/JudgeServer/JudgeService?WSDL')
-                ->trace(true)
-                ->cache(WSDL_CACHE_NONE);
-        });
 
-        $data = [
-            'problemId' => $this->submission->problemId,
-            'sourceCode' => $this->submission->sourceCode,
-            'language' => $this->submission->language,
-            'limitTime' => $this->submission->problem->timeLimit,
-            'limitMemory' => 0,
-            'isUseCustomCheck' => false,
-        ];
-
-        SoapWrapper::service('judge', function ($service) use ($data) {
-            $result = $service->call('judge', [$data])->return;
-            $decoded = json_decode($result, true);
-            if (array_key_exists('score', $decoded)) {
-                $this->submission->resultScore = intval($decoded['score']);
-            }
-            $this->submission->result = $result;
-            //$this->submission->save();
-        });
-
-        return $this->submission->result;
     }
 
     public function callJudge(){
