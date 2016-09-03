@@ -15,7 +15,7 @@ class JudgeController extends Controller
 {
     var $submission;
 
-    public function submit(Request $request, $course_id, $problem_id)
+    /*public function submit(Request $request, $course_id, $problem_id)
     {
         // Save submission to DB
         $submission = new Submission();
@@ -60,9 +60,9 @@ class JudgeController extends Controller
         }
         session()->flash('is_submitted', true);
         return Redirect::back();
-    }
+    }*/
 
-    public function submitExam(Request $request, $exam_id, $problem_id)
+    /*public function submitExam(Request $request, $exam_id, $problem_id)
     {
         // Save submission to DB
         $submission = new Submission();
@@ -107,7 +107,7 @@ class JudgeController extends Controller
         }
         session()->flash('is_submitted', true);
         return Redirect::back();
-    }
+    }*/
 
     public function submitAjax(Request $request)
     {
@@ -123,8 +123,10 @@ class JudgeController extends Controller
             $this->submission->sourceCode = $request->input('sourceCode');
             $this->submission->save();
 
+            //$client = new \SoapClient("http://localhost:8080/CodehubJudgeAssistant/SubmitService?wsdl", array('cache_wsdl' => WSDL_CACHE_NONE));
             $client = new \SoapClient("http://localhost:8080/CodehubJudgeAssistant/SubmitService?wsdl", array('cache_wsdl' => WSDL_CACHE_NONE));
             $submitData = new \stdClass();
+            $submitData->userId = $this->submission->userId;
             $submitData->submitId = $this->submission->submitId;
             $submitData->problemId = $this->submission->problemId;
             $submitData->sourceCode = $this->submission->sourceCode;
@@ -143,7 +145,7 @@ class JudgeController extends Controller
 
     }
 
-    function saveSubmission(Request $request){
+    /*function saveSubmission(Request $request){
         try{
             // Save submission to DB
             $this->submission = new Submission();
@@ -160,13 +162,13 @@ class JudgeController extends Controller
         }catch(\Exception $ex){
             return 'Error';
         }
-    }
+    }*/
 
-    public function callJudge(){
+    /*public function callJudge(){
         SoapWrapper::add(function ($service) {
             $service
                 ->name('judge')
-                ->wsdl('http://codehub.now-ip.org/JudgeServer/JudgeService?WSDL')
+                ->wsdl('http://192.168.40.128:8080/JudgeServer/JudgeService?WSDL')
                 ->trace(true)
                 ->cache(WSDL_CACHE_NONE);
         });
@@ -189,5 +191,5 @@ class JudgeController extends Controller
             $this->submission->result = $result;
             $this->submission->save();
         });
-    }
+    }*/
 }

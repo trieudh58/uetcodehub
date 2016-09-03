@@ -12,16 +12,10 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-    //return view('layouts.master');
-});
-
 Route::auth();
 
-Route::get('/sample', 'HomeController@sample');
-
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
+Route::get('/user','HomeController@user')->middleware('auth');
 Route::get('/my-courses', 'CourseController@showCourses')->middleware('auth');
 Route::get('/all-courses', 'CourseController@showAllCourses')->middleware('auth');
 Route::get('/my-courses/{course_id}/problems', 'CourseController@showProblems')->middleware('auth');
@@ -32,12 +26,12 @@ Route::get('/exams/{exam_id}', 'ExamController@showExamDetail')->middleware('aut
 Route::get('/exams/{exam_id}/problems/{problem_id}', 'ExamController@showProblemDetail')->middleware('auth');
 
 
+
 Route::get('/submitAjax', function(){
     if(Request::ajax()){
         return 'ajax data';
     }
 });
-
 
 Route::post('/join/{course_id}', 'CourseController@joinCourse')->middleware('auth');
 Route::post('/leave/{course_id}', 'CourseController@leaveCourse')->middleware('auth');
@@ -53,3 +47,9 @@ Route::post('/submit-exam/{exam_id}/{problem_id}', 'JudgeController@submitExam')
 //});
 
 Route::post('submitPostAjax', ['uses' => 'JudgeController@submitAjax']);
+
+\Event::listen('Illuminate\Database\Events\QueryExecuted', function ($query) {
+    //var_dump($query->sql);
+    //var_dump($query->bindings);
+    //var_dump($query->time);
+});

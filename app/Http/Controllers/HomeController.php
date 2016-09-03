@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -12,10 +14,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('auth');
-    }
+    }*/
 
     /**
      * Show the application dashboard.
@@ -24,10 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //if(Auth::guest()){
+            $statistic = new \App\CustomClass\Statistic;
+            return view('welcome', compact('statistic'));
+        //}else{
+        //  return view("user.user");
+        //}
     }
 
-    public function sample(){
-        return view('layoutSample.layout01');
+    public function user(){
+        $statistic = new \App\CustomClass\Statistic;
+        return view("user.user", compact('statistic'));
     }
+
 }

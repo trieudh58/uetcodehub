@@ -28,4 +28,8 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\Exam');
     }
+
+    public function semester(){
+        return $this->belongsTo('App\Models\Semester', 'semesterId');
+    }
 }

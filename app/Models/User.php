@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -13,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'firstname', 'lastname', 'email', 'password',
+        'username', 'firstname', 'lastname', 'email', 'password', 'roleId'
     ];
 
     /**
@@ -25,11 +26,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getFullName()
+    public function getFullname()
     {
-        return $this->firstName.' '.$this->lastName;
+        return $this->firstname . ' ' . $this->lastname;
     }
-    
+
+    public function role(){
+        return $this->hasOne('App\Models\Userrole', 'roleId');
+    }
+
     public function problems()
     {
         return $this->hasMany('App\Models\Problem');
@@ -40,11 +45,77 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Course', 'courseusers', 'userId', 'courseId');
     }
 
-    public function submissions($courseId, $problemId){
+    public function submissions($courseId, $problemId)
+    {
         $condition = ['courseId' => $courseId, 'problemId' => $problemId];
         return
             $this->hasMany('App\Models\Submission', 'userId')
-                 ->where($condition)->orderBy('submitId', 'desc')->get();
+                ->where($condition)->orderBy('submitId', 'desc')->get();
+    }
+
+    public function allSubmissions()
+    {
+        return $this->hasMany('App\Models\Submission', 'userId')->orderBy('submitId', 'desc');
+    }
+
+    public function totalScore()
+    {
+        $tbl = $this
+            ->hasMany('App\Models\Submission', 'userId')
+            ->groupBy('courseId', 'problemId')
+            ->get(['submissions.submitId', \DB::raw('max(resultScore) as maxScore')])
+            ->sum('maxScore');
+        return $tbl;
+    }
+
+    protected $rankingTable;
+    public function calculateRanking(){
+        $this->rankingTable = DB::select(
+            DB::raw(
+                'select rankingTable.userId, rankingTable.totalScore, rankingTable.rank from
+                  (select userId, totalScore,
+                    @curRank := IF(@prevRank = totalScore, @curRank, @incRank) AS rank, 
+                    @incRank := @incRank + 1, 
+                    @prevRank := totalScore
+                  from
+                    (select b.userId as userId, sum(b.maxScore) as totalScore
+                    from 
+                      (select users.userId, submissions.problemId, submissions.courseId, COALESCE(max(resultScore),-1) as maxScore
+                      from submissions right join users on submissions.userId = users.userId
+                      group by users.userId, problemId, courseId) as b
+                    group by b.userId order by totalScore desc) as c,
+                    (SELECT @curRank :=0, @prevRank := NULL, @incRank := 1) as r 
+                  ) as rankingTable'
+            )
+        );
+    }
+
+    public function currentRanking()
+    {
+        $currentRank = DB::select(
+            DB::raw(
+                'select rankingTable.userId, rankingTable.totalScore, rankingTable.rank from
+                  (select userId, totalScore,
+                    @curRank := IF(@prevRank = totalScore, @curRank, @incRank) AS rank, 
+                    @incRank := @incRank + 1, 
+                    @prevRank := totalScore
+                  from
+                    (select b.userId as userId, sum(b.maxScore) as totalScore
+                    from 
+                      (select users.userId, submissions.problemId, submissions.courseId, COALESCE(max(resultScore),-1) as maxScore
+                      from submissions right join users on submissions.userId = users.userId
+                      group by users.userId, problemId, courseId) as b
+                    group by b.userId order by totalScore desc) as c,
+                    (SELECT @curRank :=0, @prevRank := NULL, @incRank := 1) as r 
+                  ) as rankingTable where userId = '.$this->userId
+            )
+        );
+        return $currentRank[0]->rank;
+
+    }
+
+    public function totalUserNumber(){
+        return $this->get()->count();
     }
 
     /* Remove remember token */
@@ -69,8 +140,7 @@ class User extends Authenticatable
     public function setAttribute($key, $value)
     {
         $isRememberTokenAttribute = $key == $this->getRememberTokenName();
-        if (!$isRememberTokenAttribute)
-        {
+        if (!$isRememberTokenAttribute) {
             parent::setAttribute($key, $value);
         }
     }

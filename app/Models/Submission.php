@@ -13,4 +13,11 @@ class Submission extends Model
     {
         return $this->belongsTo('App\Models\Problem', 'problemId');
     }
+
+    public function detail(){
+
+        return json_decode($this->result, true);
+    }
+
+    
 }

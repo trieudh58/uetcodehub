@@ -2,6 +2,13 @@
 
 @section('extendedHead')
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <link href="{{URL::asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet"
+          type="text/css">
+@endsection
+
+@section('pageScript')
+    <script src="{{URL::asset('assets/global/plugins/bootstrap-toastr/toastr.min.js')}}"
+            type="text/javascript"></script>
 @endsection
 
 @section('script')
@@ -48,6 +55,7 @@
 
         $(document).ready(function () {
             $('#mytabs').tabs();
+            $('#result').load('{{url(Request::path().'/submissionTable')}}')
 
             $(function() {
                 function callAjax(){
@@ -68,10 +76,12 @@
                     success: function (data) {
                         console.log(data);//
                         if(data == 'OK'){
-                            alert('submit OK');
+                            //alert('submit OK');
                             $('#mytabs').tabs("option", "active", 1);
+                            toastr.success("Submission notifications", "Your submission is sent successfully");
                         }else{
-                            alert('something wrong');
+                            //alert('something wrong');
+                            toastr.error("Submission notifications", "Error to submit submission");
                         }
 
                     },
@@ -127,14 +137,7 @@
                             <div role="tabpanel"
                                  class="tab-pane {{Session::get('is_submitted') == true ? '' : 'active'}}"
                                  id="editor-box">
-                                {{--{!! Form::open([--}}
-                                {{--'action' => array('JudgeController@submit', $courseId, $problem->problemId),--}}
-                                {{--'method' => 'post',--}}
-                                {{--]) !!}--}}
-                                {{--{!! Form::open([--}}
-                                {{--'action' => array('JudgeController@submitAjax', $courseId, $problem->problemId),--}}
-                                {{--'method' => 'post',--}}
-                                {{--]) !!}--}}
+
                                 <form id="frmSubmit" onsubmit="return false">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="panel">
@@ -165,11 +168,10 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <div style="clear: both"></div>
 
                                     </div>
                                 </form>
-                                {{--                                {!! Form::close() !!}--}}
+
                             </div>
                             <div role="tabpanel"
                                  class="tab-pane {{Session::get('is_submitted') == true ? 'active' : ''}}" id="result">

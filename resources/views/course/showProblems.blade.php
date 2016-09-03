@@ -10,7 +10,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-green"></i>
-                <span class="caption-subject font-green bold uppercase">Course ...</span>
+                <span class="caption-subject font-green bold uppercase">{{$course->courseName}}</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -21,26 +21,22 @@
                         <tr>
                             <th>Thứ tự</th>
                             <th>Tag value</th>
-                            <th>Giới hạn thời gian chạy</th>
                             <th>Độ khó</th>
                             <th>Tổng điểm</th>
-                            <th>Trạng thái</th>
+                            <th>Đã nộp</th>
+                            <th>Đã hoàn thành</th>
+                            <th>Điểm hiện tại</th>
                         </tr>
                         <tbody>
                         @foreach($problems as $index=>$p)
                             <tr>
                                 <td><a href="{{url(Request::path().'/'.$p->problemId)}}">Bài {{$index + 1}}</a></td>
                                 <td width="300px">{{$p->tagValues}}</td>
-                                <td>{{$p->timeLimit}}</td>
                                 <td>{{$p->pivot->hardLevel}}</td>
                                 <td>{{$p->pivot->scoreInCourse}}</td>
-                                <td>
-                                    @if($p->isActive)
-                                        Active
-                                    @else
-                                        Inactive
-                                    @endif
-                                </td>
+                                <td>{{$p->numberOfSubmitedUser()}} người</td>
+                                <td>{{$p->numberOfFinishedUser()}} người</td>
+                                <td>{{$p->getScoreOfUser($course->courseId)}}</td>
                             </tr>
                         @endforeach
                         </tbody>

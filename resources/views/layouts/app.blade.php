@@ -138,16 +138,16 @@ License: You must have a valid license purchased only from themeforest(the above
                         </li>
                     @else
                         <li class="dropdown dropdown-user">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                            <a href="{{url('/user')}}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                                data-close-others="true">
                                 <img alt="" class="img-circle"
-                                     src="{{URL::asset('assets/layouts/layout2/img/avatar3_small.jpg')}}"/>
-                                <span class="username username-hide-on-mobile"> Nick </span>
+                                     src="{{URL('assets/pages/media/profile/default_user.jpg')}}"/>
+                                <span class="username username-hide-on-mobile"> {{Auth::user()->getFullname()}} </span>
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
                                 <li>
-                                    <a href="page_user_profile_1.html">
+                                    <a href="{{url('/user')}}">
                                         <i class="icon-user"></i> My Profile </a>
                                 </li>
                                 <li>
@@ -194,6 +194,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
+
     <div class="page-sidebar-wrapper">
         <!-- END SIDEBAR -->
         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
@@ -247,11 +248,12 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END SIDEBAR -->
     </div>
+
     <!-- END SIDEBAR -->
     <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper">
+    <div class="page-content-wrapper" style="margin: 0px !important;">
         <!-- BEGIN CONTENT BODY -->
-        <div class="page-content">
+        <div class="page-content" >
             <!-- BEGIN PAGE HEADER-->
             <h3 class="page-title"> @yield('pageTitle')
             </h3>
